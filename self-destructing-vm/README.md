@@ -14,4 +14,4 @@ gcloud compute instances create \
   --metadata SELF_DESTRUCT_INTERVAL_MINUTES=2 \
   --metadata-from-file startup-script=self-destruct.sh
 ```
-1. ...it should self-delete in 2 minutes
+...it should self-delete in 2 minutes
