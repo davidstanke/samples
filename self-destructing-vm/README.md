@@ -12,16 +12,3 @@ gcloud compute instances create \
   --metadata SELF_DESTRUCT_INTERVAL_MINUTES=2 \
   --metadata-from-file startup-script=self-destruct.sh
 ```
-
-1. self-destruct script: self-destruct.sh
-(place at `/` and `chmod 755` it)
-```
-gcloud compute scp ./self-destruct.sh root@self-destruct-01:/
-gcloud compute ssh root@self-destruct-01 --command 'chmod 755 /self-destruct.sh'
-```
-1. schedule the self-destruct script to run 5 min after boot
-```
-gcloud compute ssh root@self-destruct-01 --command 'export SELF_DESTRUCT="1m"'
-gcloud compute ssh root@self-destruct-01 --command '(crontab -l 2>/dev/null; echo "@reboot sleep $SELF_DESTRUCT && /self-destruct.sh") | crontab -'
-gcloud compute ssh root@self-destruct-01 --command 'reboot'
-```
