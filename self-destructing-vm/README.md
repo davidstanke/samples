@@ -2,7 +2,9 @@
 
 TODO: bake this into a VM image and put it in a public place ('doingdevops' prject)
 
-1. create it:
+1. clone this repo (you'll need the `self-destruct.sh` script present in this folder)
+
+1. create the vm:
 ```
 gcloud compute instances create \
   self-destruct-01 \
@@ -12,3 +14,4 @@ gcloud compute instances create \
   --metadata SELF_DESTRUCT_INTERVAL_MINUTES=2 \
   --metadata-from-file startup-script=self-destruct.sh
 ```
+1. ...it should self-delete in 2 minutes
