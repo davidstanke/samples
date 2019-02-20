@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# specify this as a startup script for a compute instance and it will self-destruct after specified interval
+# use this as a startup script for a compute instance and it will self-destruct after specified interval
 # (default = 2 hours)
 
 # retrieve interval from metadata service (if available)
