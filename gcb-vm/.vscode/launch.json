@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - HelloGcbApplication",
+            "request": "launch",
+            "mainClass": "com.doingdevops.hellogcb.HelloGcbApplication",
+            "projectName": "hello-gcb"
+        }
+    ]
+}

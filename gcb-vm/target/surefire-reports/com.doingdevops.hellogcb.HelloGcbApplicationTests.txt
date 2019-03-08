@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.doingdevops.hellogcb.HelloGcbApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.932 s - in com.doingdevops.hellogcb.HelloGcbApplicationTests
