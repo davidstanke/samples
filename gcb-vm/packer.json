@@ -5,7 +5,8 @@
     "region": "var",
     "zone": "var",
     "project_id": "var",
-    "image_name": "var"
+    "image_name": "var",
+    "jar_file": "var"
   },
   "builders": [
     {
@@ -24,11 +25,23 @@
   ],
   "provisioners": [
     {
+        "type": "file",
+        "source": "{{ user `jar_file` }}",
+        "destination": "/hellogcb.jar"
+    },
+    {
+        "type": "file",
+        "source": "startup.sh",
+        "destination": "/etc/init.d/startup.sh"
+    },
+    {
       "type": "shell",
       "inline": [
         "sleep 10",
-        "uname -a",
-        "uptime"
+        "sudo apt-get update -y",
+        "sudo apt-get install openjdk-8-jre -y",
+        "sudo chmod +x /etc/init.d/startup.sh",
+        "sudo update-rc.d startup.sh defaults"
       ]
     }
   ]
