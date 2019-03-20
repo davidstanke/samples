@@ -1,4 +1,4 @@
-# Use Cloud Build to bake and deploy a GCE VM
+# Use Cloud Build to bake a GCE VM
 
 ### Running Packer locally:
 ```
