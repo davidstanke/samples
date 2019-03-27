@@ -1,0 +1,21 @@
+steps:
+
+### hard way
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   args: ['container', 'clusters', 'get-credentials', 'staging', '--zone=us-central1-a']
+
+### easy way
+# - name: 'gcr.io/cloud-builders/kubectl'
+#   args: ['create', 'deployment', 'nginx2', '--image=nginx']
+#   env: 
+#     - CLOUDSDK_COMPUTE_ZONE=us-central1-a
+#     - CLOUDSDK_CONTAINER_CLUSTER=staging
+
+### easier way
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['create', 'deployment', 'nginx3', '--image=nginx']
+
+options:  
+  env: 
+    - CLOUDSDK_COMPUTE_ZONE=us-central1-a
+    - CLOUDSDK_CONTAINER_CLUSTER=staging

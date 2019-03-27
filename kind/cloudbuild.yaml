@@ -1,0 +1,16 @@
+# Cloud Build config to try using kind (https://github.com/kubernetes-sigs/kind)
+
+steps:
+- name: gcr.io/cloud-builders/docker
+  entrypoint: '/bin/bash'
+  args: 
+  - '-c'
+  - |
+    curl -O https://storage.googleapis.com/golang/go1.11.2.linux-amd64.tar.gz && \
+    tar -xvf go1.11.2.linux-amd64.tar.gz && \
+    mv go /usr/local && \
+    mkdir /work && \
+    export GOPATH=/work && \
+    export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin && \
+    go get -u sigs.k8s.io/kind && \
+    kind create cluster

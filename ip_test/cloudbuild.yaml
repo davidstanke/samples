@@ -1,0 +1,38 @@
+steps:
+- id: 'init terraform'
+  name: 'gcr.io/$PROJECT_ID/terraform'
+  args: [
+    'init',
+    ]
+- id: 'provision some VMs'
+  name: 'gcr.io/$PROJECT_ID/terraform'
+  entrypoint: 'bash'
+  args: 
+    - '-c'
+    - |
+        apt-get update -y && apt-get install curl -y && \
+        for j in $$(seq 0 20); do
+            terraform apply -var=project-name=$PROJECT_ID -var=region=us-central1 -auto-approve && \
+            export _ip=$$(terraform output ip)
+            echo "IP of new machine: $$_ip" && \
+            export _url=http://$$_ip && \
+            echo "connecting..."
+            export _abletoconnect="false"
+            for i in $$(seq 0 30); do
+        
+                status="$(curl -sL -w "%{http_code}" -I "$$_url" -o /dev/null)" || status='000'
+                
+                if [[ $$status == '200' ]]
+                then
+                    echo "successfully connected to $$_ip"
+                    break
+                else
+                    if [ $i -gt 0 ]; then
+                        echo "retrying..."
+                        sleep 10
+                    fi
+                fi
+            done
+            terraform destroy -force
+        done
+timeout: 120m
