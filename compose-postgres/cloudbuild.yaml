@@ -1,0 +1,8 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/docker-compose'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      docker-compose up -d
+      bash ./scripts/wait-for-postgres.sh echo "connected"
