@@ -1,0 +1,57 @@
+# purpose of this file: test whether global options are properly reflected in build steps
+
+steps:
+
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: '/bin/sh'
+  args:
+  - '-c'
+  - |
+    echo "_MY_SUB_A: $_MY_SUB_A"
+    echo "_MY_SUB_B: $_MY_SUB_B"
+    echo "ENV.ENV_A: $$ENV_A" # note use of double $'s...
+    echo "ENV.ENV_B: $$ENV_B" # ...so the variable is interpreted *inside* the builder
+
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: '/bin/sh'
+  args:
+  - '-c'
+  - |
+    echo "write some text files to volumes..."
+    echo "$$ENV_A;$$ENV_B" > /volume1/textfile_a
+    echo "foobar" > /volume2/textfile_b
+
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: '/bin/sh'
+  args:
+  - '-c'
+  - |
+    echo "copy a text file between volumes..."
+    cp /volume1/textfile_a /volume2/textfile_a
+
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: '/bin/sh'
+  args:
+  - '-c'
+  - |
+    echo "read the text files..."
+    cat /volume2/textfile_a
+    cat /volume2/textfile_b
+
+# -------------------------------------------------------------------------------------------------------------
+# --- OPTIONS --- #
+
+options:
+  env: ['ENV_A=$_MY_SUB_A', 'ENV_B=a value for ENV_B']
+  volumes:
+  - name: 'volume1'
+    path: /volume1
+  - name: 'volume2'
+    path: '/volume2'
+
+# -------------------------------------------------------------------------------------------------------------
+# --- SUBSTITUTIONS --- #
+
+substitutions:
+  _MY_SUB_A: 'value of _MY_SUB_A'
+  _MY_SUB_B: 'value of _MY_SUB_B'
