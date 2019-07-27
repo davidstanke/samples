@@ -17,9 +17,8 @@ pipeline {
 	        steps {
 	    	    container('ubuntu') {
                       sh "echo hello"
-		    }
-		}
-	   }
-       }
+		       }
+		   }
+	    }
     }
 }
