@@ -10,7 +10,7 @@ pipeline {
     	    agent {
     	    	kubernetes {
       		    cloud 'kubernetes'
-      		    label 'mavenpod'
+      		    label 'ubuntupod'
       		    yamlFile 'samples/jenkins/podspecs/ubuntu.yaml'
 		        }
 	        }
