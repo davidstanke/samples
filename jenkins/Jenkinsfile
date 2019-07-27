@@ -1,0 +1,25 @@
+pipeline {
+    agent none
+
+    environment {
+        FOO = "bar"
+    }
+
+    stages {
+        stage("echo") {
+    	    agent {
+    	    	kubernetes {
+      		    cloud 'kubernetes'
+      		    label 'mavenpod'
+      		    yamlFile 'samples/jenkins/podspecs/ubuntu.yaml'
+		        }
+	        }
+	        steps {
+	    	    container('ubuntu') {
+                    dir("/") {
+                      sh "echo 'hello'"
+		                }
+		         }
+	        }
+	      }
+}
