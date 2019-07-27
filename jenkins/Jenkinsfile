@@ -1,5 +1,8 @@
 pipeline {
     agent none
+    triggers {
+        cron('H/15 * * * *')
+    }
 
     environment {
         FOO = "bar"
